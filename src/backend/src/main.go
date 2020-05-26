@@ -9,7 +9,6 @@ import (
 // main starts an http server on the $PORT environment variable.
 func main() {
 	log.Printf("server starting to listen on port 8080")
-	http.HandleFunc("/", home)
 	http.HandleFunc("/api/hello", hello)
     http.ListenAndServe(":8080", nil)
 }
@@ -25,7 +24,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
         w.WriteHeader(http.StatusMethodNotAllowed)
         fmt.Fprintf(w, "invalid_http_method")
         return
-	}
+    }
     // Must call ParseForm() before working with data
     r.ParseForm()
     // Log all data. Form is a map[]
