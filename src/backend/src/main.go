@@ -13,13 +13,11 @@ func main() {
     http.ListenAndServe(":8080", nil)
 }
 
-// home logs the received request and returns a simple response.
-func home(w http.ResponseWriter, r *http.Request) {
-	log.Printf("received request: %s %s", r.Method, r.URL.Path)
-	fmt.Fprintf(w, "Hello, world From a Microservice!")
-}
-
 func hello(w http.ResponseWriter, r *http.Request) {
+    if r.URL.Path != "/" {
+        errorHandler(w, r, http.StatusNotFound)
+        return
+    }
     if r.Method != http.MethodPost {
         w.WriteHeader(http.StatusMethodNotAllowed)
         fmt.Fprintf(w, "invalid_http_method")
@@ -32,4 +30,11 @@ func hello(w http.ResponseWriter, r *http.Request) {
 
     // Print the data back. We can use Form.Get() or Form["name"][0]
     fmt.Fprintf(w, "Hello " + r.Form.Get("name"))
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
+    w.WriteHeader(status)
+    if status == http.StatusNotFound {
+        fmt.Fprint(w, "custom 404")
+    }
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -14,5 +15,16 @@ func main() {
 
 // home logs the received request and returns a simple response.
 func index(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+        errorHandler(w, r, http.StatusNotFound)
+        return
+    }
 	http.ServeFile(w, r, "./static/index.html")
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
+    w.WriteHeader(status)
+    if status == http.StatusNotFound {
+        fmt.Fprint(w, "custom 404")
+    }
 }
