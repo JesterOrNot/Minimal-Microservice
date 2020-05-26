@@ -10,7 +10,7 @@ RUN go mod download
 COPY . ./
 
 # Compile the application to /app.
-RUN go build -o /app -v ./cmd/hello-world
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -o /app -v ./cmd/hello-world
 
 FROM scratch
 
