@@ -1,40 +1,25 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-)
+import "github.com/gin-gonic/gin"
 
-// main starts an http server on the $PORT environment variable.
+
+// Form Data
+type Form struct {
+	Name string `form:"name"`
+}
+
 func main() {
-	log.Printf("server starting to listen on port 8080")
-	http.HandleFunc("/api/hello", hello)
-    http.ListenAndServe(":8080", nil)
+	server := gin.Default()
+	server.GET("/api/hello", hello)
+	server.Run(":8081")
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-    if r.URL.Path != "/" {
-        errorHandler(w, r, http.StatusNotFound)
-        return
-    }
-    if r.Method != http.MethodPost {
-        w.WriteHeader(http.StatusMethodNotAllowed)
-        fmt.Fprintf(w, "invalid_http_method")
-        return
-    }
-    // Must call ParseForm() before working with data
-    r.ParseForm()
-    // Log all data. Form is a map[]
-    log.Println(r.Form)
+func hello(c *gin.Context) {
+	var form Form
 
-    // Print the data back. We can use Form.Get() or Form["name"][0]
-    fmt.Fprintf(w, "Hello " + r.Form.Get("name"))
-}
-
-func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
-    w.WriteHeader(status)
-    if status == http.StatusNotFound {
-        fmt.Fprint(w, "custom 404")
-    }
+	if c.ShouldBind(&form) == nil {
+		c.JSON(200, gin.H{
+			"message": "Hello " + form.Name,
+		})
+	}
 }
