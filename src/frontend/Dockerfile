@@ -1,22 +1,17 @@
-FROM golang:1.14 AS base
+FROM rust:1.43-slim AS base
 
-WORKDIR /src/hello-world
+WORKDIR /application
 
-# Install dependencies in go.mod and go.sum
-COPY go.mod go.sum ./
-RUN go mod download
+RUN rustup target add x86_64-unknown-linux-musl \
+    && rustup default nightly
 
-# Copy rest of the application source code
-COPY . ./
+COPY Cargo.toml Cargo.lock ./
+RUN cargo build --release
 
-# Compile the application to /app.
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -o /app -v ./src
+COPY src ./src
+RUN cargo install --target x86_64-unknown-linux-musl --path .
 
 FROM scratch
 
-COPY --from=base /app /app
-COPY --from=base /src/hello-world/static/index.html ./static/index.html
-
-EXPOSE 8080
-
-CMD [ "/app" ]
+COPY --from=build /usr/local/cargo/bin/frontend .
+CMD ["./frontend"]
