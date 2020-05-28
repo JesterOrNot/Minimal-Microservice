@@ -10,6 +10,11 @@ fn index() -> Result<NamedFile> {
     NamedFile::open("static/index.html")
 }
 
+#[get("/index.js")]
+fn js() -> Result<NamedFile> {
+    NamedFile::open("static/index.js")
+}
+
 fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+    rocket::ignite().mount("/", routes![index, js]).launch();
 }
