@@ -6,9 +6,9 @@ spec:
   selector:
     app: microservice-frontend
   ports:
-  - protocol: "TCP"
-    port: 8080
-    targetPort: 8080
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8080
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -26,8 +26,8 @@ spec:
         app: microservice-frontend
     spec:
       containers:
-      - name: microservice-frontend
-        image: microservice-frontend:latest
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 8080
+        - name: microservice-frontend
+          image: microservice-frontend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
