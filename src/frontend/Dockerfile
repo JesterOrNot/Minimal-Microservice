@@ -8,4 +8,6 @@ COPY . ./
 
 RUN cargo build --release
 
+ENV ROCKET_PORT=8080
+
 CMD ["cargo", "run", "--release"]
