@@ -16,6 +16,6 @@ FROM scratch
 
 COPY --from=base /app /app
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD [ "/app" ]
