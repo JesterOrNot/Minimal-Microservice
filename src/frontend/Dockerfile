@@ -1,11 +1,9 @@
-FROM rust:1.43-slim AS build
+FROM node:12.17.0-stretch-slim
 
 WORKDIR /application
 
-RUN rustup default nightly
-
 COPY . ./
 
-RUN cargo build --release
+RUN npm install && npm run build
 
-CMD ["cargo", "run", "--release"]
+CMD ["npm", "start"]
