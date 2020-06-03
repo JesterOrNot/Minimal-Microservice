@@ -25,8 +25,8 @@ ENV PATH=$GCS_DIR/bin:$PATH
 RUN sudo chown gitpod: /opt \
     && mkdir $GCS_DIR \
     && curl -fsSL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-245.0.0-linux-x86_64.tar.gz \
-    | tar -xzvC /opt \
-    && /opt/google-cloud-sdk/install.sh --quiet --usage-reporting=false --bash-completion=true \
+    | tar -xzvC /opt; \
+    /opt/google-cloud-sdk/install.sh --quiet --usage-reporting=false --bash-completion=true \
     --additional-components alpha beta
 
 RUN sudo apt-get update \
@@ -45,6 +45,7 @@ RUN sudo apt-get update \
     && sudo apt-get update \
     && sudo apt-get install -yq \
         docker-ce \
+        protobuf-compiler \
         docker-ce-cli \
         containerd.io \
     && sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \

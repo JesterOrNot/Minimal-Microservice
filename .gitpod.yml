@@ -11,6 +11,16 @@ tasks:
       gcloud auth login
       gcloud config set project spartan-impact-279014
       gcloud container clusters get-credentials my-first-cluster-1 --zone us-central1-c --project spartan-impact-279014
+  - name: Go-Micro
+    init: |
+      cd src/greet
+      go get github.com/micro/micro/v2
+      go get -u github.com/golang/protobuf/proto
+      go get -u github.com/golang/protobuf/protoc-gen-go
+      go get github.com/micro/micro/v2/cmd/protoc-gen-micro@master
+      go get github.com/micro/micro/v2/cmd/protoc-gen-micro
+      nohup micro server &
+      go run main.go
 github:
   prebuilds:
     branches: true
@@ -23,3 +33,4 @@ ports:
 vscode:
   extensions:
     - googlecloudtools.cloudcode@1.4.0:Gxy18d/QyadCa4CWSam8Jg==
+    - zxh404.vscode-proto3@0.4.2:kQq4sh3VvE4pXZDAEt0bRw==
