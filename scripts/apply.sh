@@ -1,5 +1,5 @@
 #!/bin/bash
 
 for file in kubernetes/*; do
-    kubectl apply -f $file
+    kubectl.exe $1 -f $file
 done
