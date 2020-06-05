@@ -1,16 +1,16 @@
-apiVersion: skaffold/v1beta15
+apiVersion: skaffold/v2beta1
 kind: Config
+metadata:
+  name: minimal-microservice
 build:
-  tagPolicy:
-    sha256: {}
   artifacts:
-  - context: .
-    image: go-hello-world
+  - image: microservice-backend
+    context: src/backend
+  - image: microservice-frontend
+    context: src/frontend
 deploy:
   kubectl:
     manifests:
-    - kubernetes-manifests/**
-profiles:
-- name: cloudbuild
-  build:
-    googleCloudBuild: {}
+    - kubernetes/backend.yml
+    - kubernetes/frontend.yml
+    - kubernetes/ingress.yml

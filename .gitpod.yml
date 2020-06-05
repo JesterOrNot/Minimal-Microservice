@@ -11,6 +11,25 @@ tasks:
       gcloud auth login
       gcloud config set project spartan-impact-279014
       gcloud container clusters get-credentials my-first-cluster-1 --zone us-central1-c --project spartan-impact-279014
+  - name: Go-Micro
+    init: |
+      cd src/greet
+      go get github.com/micro/micro/v2
+      go get -u github.com/golang/protobuf/proto
+      go get -u github.com/golang/protobuf/protoc-gen-go
+      go get github.com/micro/micro/v2/cmd/protoc-gen-micro@master
+      go get github.com/micro/micro/v2/cmd/protoc-gen-micro
+      gp sync-done micro
+      nohup micro server &
+      protoc --proto_path=. --go_out=. --micro_out=. proto/greet.proto
+      go build -o greeter-service main.go
+    command: cd src/greet && ./greeter-service
+  - name: Terminal
+    command: |
+      cd src/greet
+      sleep 3
+      gp sync-await micro
+      micro call helloworld Greeter.Hello '{"name":"Sean"}'
 github:
   prebuilds:
     branches: true
@@ -18,8 +37,19 @@ github:
 ports:
   - port: 8080
     onOpen: ignore
-  - port:  8081
+  - port: 8081
+    onOpen: ignore
+  - port: 8082
+    onOpen: ignore
+  - port: 8009
+    onOpen: ignore
+  - port: 8010
+    onOpen: ignore
+  - port: 33755
+    onOpen: ignore
+  - port: 34531
     onOpen: ignore
 vscode:
   extensions:
     - googlecloudtools.cloudcode@1.4.0:Gxy18d/QyadCa4CWSam8Jg==
+    - zxh404.vscode-proto3@0.4.2:kQq4sh3VvE4pXZDAEt0bRw==
