@@ -15,6 +15,11 @@ fn js() -> Result<NamedFile> {
     NamedFile::open("static/index.js")
 }
 
+#[catch(404)]
+fn not_found() -> Result<NamedFile> {
+    NamedFile::open("static/404.html")
+}
+
 fn main() {
-    rocket::ignite().mount("/", routes![index, js]).launch();
+    rocket::ignite().mount("/", routes![index, js]).register(catchers![not_found]).launch();
 }
