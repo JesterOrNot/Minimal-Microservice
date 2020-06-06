@@ -6,9 +6,9 @@ spec:
   selector:
     app: microservice-backend
   ports:
-  - protocol: "TCP"
-    port: 8081
-    targetPort: 8081
+    - protocol: "TCP"
+      port: 8081
+      targetPort: 8081
   type: NodePort
 ---
 apiVersion: apps/v1
@@ -26,8 +26,8 @@ spec:
         app: microservice-backend
     spec:
       containers:
-      - name: microservice-backend
-        image: microservice-backend
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 8081
+        - name: microservice-backend
+          image: microservice-backend
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8081

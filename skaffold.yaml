@@ -4,13 +4,13 @@ metadata:
   name: minimal-microservice
 build:
   artifacts:
-  - image: microservice-backend
-    context: src/backend
-  - image: microservice-frontend
-    context: src/frontend
+    - image: microservice-backend
+      context: src/backend
+    - image: microservice-frontend
+      context: src/frontend
 deploy:
   kubectl:
     manifests:
-    - kubernetes/backend.yml
-    - kubernetes/frontend.yml
-    - kubernetes/ingress.yml
+      - kubernetes/backend.yml
+      - kubernetes/frontend.yml
+      - kubernetes/ingress.yml
