@@ -7,14 +7,14 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: localhost
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: microservice-frontend
-          servicePort: 8080
-      - path: /api
-        backend:
-          serviceName: microservice-backend
-          servicePort: 8081
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: microservice-frontend
+              servicePort: 8080
+          - path: /api
+            backend:
+              serviceName: microservice-backend
+              servicePort: 8081
