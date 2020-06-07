@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: microservice-frontend
-        image: microservice-frontend:latest
+        image: microservice-frontend
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
