@@ -9,6 +9,9 @@ Param(
 
 if ($cmd -eq "destroy") {
     bash -c "scripts/apply.sh delete"
+} elseif ($cmd -eq "japply") {
+    bash -c "scripts/apply.sh delete"
+    bash -c "scripts/apply.sh apply" 
 } elseif ($cmd -eq "apply") {
     Set-Location .\src\backend
     docker build . -t microservice-backend --no-cache

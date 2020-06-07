@@ -1,6 +1,7 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-#[macro_use] extern crate rocket;
+#[macro_use]
+extern crate rocket;
 
 use rocket::response::NamedFile;
 use std::io::Result;
@@ -21,5 +22,8 @@ fn not_found() -> Result<NamedFile> {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, js]).register(catchers![not_found]).launch();
+    rocket::ignite()
+        .mount("/", routes![index, js])
+        .register(catchers![not_found])
+        .launch();
 }
