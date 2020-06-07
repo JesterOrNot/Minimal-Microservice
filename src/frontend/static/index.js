@@ -1,5 +1,8 @@
 function getTextInput() {
-    return document.getElementById("greetInput").value;
+    element = document.getElementById("greetInput");
+    value = element.value
+    element.value = "";
+    return value;
 }
 
 function greet() {
