@@ -7,9 +7,9 @@ function getTextInput() {
 
 function greet() {
     fetch(`/api/hello?name=${getTextInput()}`).then(response => {
-        console.log(response.json());
         return response.json();
     }).then(data => {
+        console.log(data);
         document.getElementById("text").innerText = data.message;
     });
     return true;
