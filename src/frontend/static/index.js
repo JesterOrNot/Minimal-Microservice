@@ -1,11 +1,12 @@
 function getTextInput() {
-    return document.getElementById("greetInput").nodeValue;
+    return document.getElementById("greetInput").value;
 }
 
 function greet() {
-    fetch(`127.0.0.1:8081/api/hello?name=${getTextInput()}`).then(response => {
+    fetch(`/api/hello?name=${getTextInput()}`).then(response => {
         return response.json();
     }).then(data => {
         document.getElementById("text").innerText = data.message;
     });
+    return true;
 }
