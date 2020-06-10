@@ -1,29 +1,30 @@
 function getTextValue(id) {
-    return function () {
-        element = document.getElementById(id)
-        value = element.value
-        element.value = ""
-        return value
-    }
+  return function () {
+    element = document.getElementById(id);
+    value = element.value;
+    element.value = "";
+    return value;
+  };
 }
 
 function greet() {
-    fetch(`/api/hello?name=${getTextValue("greetInput")()}`).then(response => {
-        return response.json();
-    }).then(data => {
+  body = {
+    "name": `${getTextValue("greetInput")()}`,
+    "age": parseInt(`${getTextValue("ageInput")()}`),
+  }
+  fetch(`/api/vote`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data)
+      if (data.message !== undefined) {
         document.getElementById("text").innerText = data.message;
+      } else {
+        alert(data.error);
+      }
     });
-    fetch(`/api/vote?age=${getTextValue("ageInput")()}`).then(response => {
-        return response.json();
-    }).then(data => {
-        oldText = document.getElementById("text").innerText
-        message = ""
-        if (typeof data.canVote !== "boolean") {
-            alert(data.canVote)
-        } else {
-            message = data.canVote ? "you can vote!" : "you can't vote!"
-        }
-        document.getElementById("text").innerText = oldText + " " + message;
-    });
-    return true;
 }
