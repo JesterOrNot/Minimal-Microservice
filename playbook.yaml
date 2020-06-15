@@ -1,0 +1,17 @@
+- name: Start Kubernetes App
+  hosts: localhost
+  tasks:
+    - name: Build Frontend
+      docker_image:
+        name: microservice-frontend
+        build:
+          path: src/frontend
+        args:
+          no-cache: true
+    - name: Build Backend
+      docker_image:
+        name: microservice-backend
+        build:
+          path: src/backend
+        args:
+          no-cache: true
