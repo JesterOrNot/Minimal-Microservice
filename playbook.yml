@@ -1,0 +1,20 @@
+- name: Build Docker Images
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Build Frontend
+      docker_image:
+        name: microservice-frontend
+        build:
+          path: ./src/frontend
+          pull: no
+          nocache: true
+        source: build
+    - name: Build Backend
+      docker_image:
+        name: microservice-backend
+        build:
+          path: ./src/backend
+          nocache: true
+          pull: no
+        source: build

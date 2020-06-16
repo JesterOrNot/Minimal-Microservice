@@ -23,3 +23,4 @@ ports:
 vscode:
   extensions:
     - googlecloudtools.cloudcode@1.4.0:Gxy18d/QyadCa4CWSam8Jg==
+    - vscoss.vscode-ansible@0.5.2:Mff9FZmh2X9uPnMB9kEzCA==
